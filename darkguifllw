@@ -1,145 +1,114 @@
---------------------------------------------------------------------
---  darkcheat | Compact Money / Gear GUI | 2‑s splash + red/black theme
---------------------------------------------------------------------
-local Players      = game:GetService("Players")
-local TweenService = game:GetService("TweenService")
-local RepStorage   = game:GetService("ReplicatedStorage")
-local player       = Players.LocalPlayer
+-- darkcheat GUI
+local Players=game:GetService("Players")
+local TweenService=game:GetService("TweenService")
+local RepStorage=game:GetService("ReplicatedStorage")
+local player=Players.LocalPlayer
 
---------------------------------------------------------------------
--- 0) Splash screen (2 s) ------------------------------------------------
---------------------------------------------------------------------
-local splashGui = Instance.new("ScreenGui", game.CoreGui)
-splashGui.Name = "DarkcheatSplash"
+-- splash (2 s)
+local splashGui=Instance.new("ScreenGui",game.CoreGui)
+splashGui.Name="DarkcheatSplash"
+local splashFrame=Instance.new("Frame",splashGui)
+splashFrame.Size=UDim2.fromScale(1,1)
+splashFrame.BackgroundColor3=Color3.new(0,0,0)
+local splashText=Instance.new("TextLabel",splashFrame)
+splashText.Size=UDim2.new(1,0,0,100)
+splashText.Position=UDim2.new(0,0,0.5,-50)
+splashText.Text="MADE  BY  DARKDEX"
+splashText.Font=Enum.Font.GothamBlack
+splashText.TextScaled=true
+splashText.TextColor3=Color3.new(1,0,0)
+splashText.BackgroundTransparency=1
+splashText.TextStrokeTransparency=0.15
+TweenService:Create(splashText,TweenInfo.new(1,Enum.EasingStyle.Linear,Enum.EasingDirection.InOut,-1,true),{TextColor3=Color3.new(1,1,1)}):Play()
 
-local splashFrame = Instance.new("Frame", splashGui)
-splashFrame.Size  = UDim2.fromScale(1,1)
-splashFrame.BackgroundColor3 = Color3.new(0,0,0)
-
-local splashText = Instance.new("TextLabel", splashFrame)
-splashText.Size       = UDim2.new(1,0,0,100)
-splashText.Position   = UDim2.new(0,0,0.5,-50)
-splashText.Text       = "MADE  BY  DARKDEX"
-splashText.Font       = Enum.Font.GothamBlack
-splashText.TextScaled = true
-splashText.TextColor3 = Color3.new(1,0,0)
-splashText.BackgroundTransparency = 1
-splashText.TextStrokeTransparency = 0.15
-
--- pulsate red ▶ white ▶ red
-TweenService:Create(splashText, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, true),
-    {TextColor3 = Color3.new(1,1,1)}):Play()
-
--- after 2 s remove splash & open GUI
-task.delay(2, function()
-    splashGui:Destroy()
+task.delay(2,function()
+    if splashGui.Parent then splashGui:Destroy() end
     createMainGUI()
 end)
 
---------------------------------------------------------------------
--- 1) Main GUI -----------------------------------------------------------
---------------------------------------------------------------------
 function createMainGUI()
-    local gui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
-    gui.Name = "DarkCheatGUI"
-    gui.ResetOnSpawn = false
+    local gui=Instance.new("ScreenGui",player:WaitForChild("PlayerGui"))
+    gui.Name="DarkCheatGUI"
+    gui.ResetOnSpawn=false
 
-    -- Frame ---------------------------------------------------------
-    local main = Instance.new("Frame", gui)
-    main.Size = UDim2.new(0,430,0,40)
-    main.Position = UDim2.new(0.5,-215,0.5,-110)
-    main.BackgroundColor3 = Color3.fromRGB(20,20,20)
-    main.Active, main.Draggable = true, true
-    Instance.new("UICorner", main).CornerRadius = UDim.new(0,6)
+    local main=Instance.new("Frame",gui)
+    main.Size=UDim2.new(0,430,0,40)
+    main.Position=UDim2.new(0.5,-215,0.5,-110)
+    main.BackgroundColor3=Color3.fromRGB(20,20,20)
+    main.Active=true;main.Draggable=true
+    Instance.new("UICorner",main).CornerRadius=UDim.new(0,6)
 
-    -- Header --------------------------------------------------------
-    local header = Instance.new("Frame", main)
-    header.Size = UDim2.new(1,0,0,40)
-    header.BackgroundTransparency = 1
+    local header=Instance.new("Frame",main)
+    header.Size=UDim2.new(1,0,0,40)
+    header.BackgroundTransparency=1
+    local title=Instance.new("TextLabel",header)
+    title.Size=UDim2.new(0,200,1,0)
+    title.Position=UDim2.new(0,10,0,0)
+    title.Text="darkcheat GUI"
+    title.Font=Enum.Font.GothamBold
+    title.TextScaled=true
+    title.TextColor3=Color3.fromRGB(255,0,0)
+    title.BackgroundTransparency=1
 
-    local title = Instance.new("TextLabel", header)
-    title.Size = UDim2.new(0,200,1,0)
-    title.Position = UDim2.new(0,10,0,0)
-    title.Text = "darkcheat GUI"
-    title.Font = Enum.Font.GothamBold
-    title.TextScaled = true
-    title.TextColor3 = Color3.fromRGB(255,0,0)
-    title.BackgroundTransparency = 1
+    local arrowBox=Instance.new("Frame",header)
+    arrowBox.Size=UDim2.new(0,26,0,26)
+    arrowBox.Position=UDim2.new(1,-35,0.5,-13)
+    arrowBox.BackgroundColor3=Color3.fromRGB(40,40,40)
+    Instance.new("UICorner",arrowBox).CornerRadius=UDim.new(1,0)
+    local arrowBtn=Instance.new("TextButton",arrowBox)
+    arrowBtn.Size=UDim2.new(1,0,1,0)
+    arrowBtn.BackgroundTransparency=1
+    arrowBtn.Text="+"
+    arrowBtn.Font=Enum.Font.GothamBold
+    arrowBtn.TextScaled=true
+    arrowBtn.TextColor3=Color3.fromRGB(255,0,0)
 
-    local arrowBox = Instance.new("Frame", header)
-    arrowBox.Size = UDim2.new(0,26,0,26)
-    arrowBox.Position = UDim2.new(1,-35,0.5,-13)
-    arrowBox.BackgroundColor3 = Color3.fromRGB(40,40,40)
-    Instance.new("UICorner", arrowBox).CornerRadius = UDim.new(1,0)
-
-    local arrowBtn = Instance.new("TextButton", arrowBox)
-    arrowBtn.Size = UDim2.new(1,0,1,0)
-    arrowBtn.BackgroundTransparency = 1
-    arrowBtn.Text = "+"
-    arrowBtn.Font = Enum.Font.GothamBold
-    arrowBtn.TextScaled = true
-    arrowBtn.TextColor3 = Color3.fromRGB(255,0,0)
-
-    -- Content holder ------------------------------------------------
-    local container = Instance.new("Frame", main)
-    container.Position = UDim2.new(0,0,0,40)
-    container.Size = UDim2.new(1,0,0,0)
-    container.BackgroundTransparency = 1
-    container.ClipsDescendants = true
+    local container=Instance.new("Frame",main)
+    container.Position=UDim2.new(0,0,0,40)
+    container.Size=UDim2.new(1,0,0,0)
+    container.BackgroundTransparency=1
+    container.ClipsDescendants=true
 
     local function makeButton(pos,size,text,isRed)
-        local b = Instance.new("TextButton", container)
-        b.Size, b.Position = size, pos
-        b.Text = text
-        b.TextScaled = true
-        b.BackgroundColor3 = isRed and Color3.fromRGB(200,0,0) or Color3.fromRGB(30,30,30)
-        b.TextColor3 = Color3.new(1,1,1)
-        b.Font = Enum.Font.GothamBold
+        local b=Instance.new("TextButton",container)
+        b.Size=size;b.Position=pos;b.Text=text;b.TextScaled=true
+        b.BackgroundColor3=isRed and Color3.fromRGB(200,0,0) or Color3.fromRGB(30,30,30)
+        b.TextColor3=Color3.new(1,1,1)
+        b.Font=Enum.Font.GothamBold
         return b
     end
 
-    ----------------------------------------------------------------
-    -- Buttons layout (2 rows, 2 columns) ---------------------------
-    ----------------------------------------------------------------
-    local infBtn     = makeButton(UDim2.new(0,10, 0,0),  UDim2.new(0,200,0,40), "INF Money", true)
-    local gearBtn    = makeButton(UDim2.new(0,220,0,0), UDim2.new(0,200,0,40), "Gears",      false)
-    local slapBtn    = makeButton(UDim2.new(0,10, 0,45), UDim2.new(0,200,0,40), "Best Slap", false)
-    local destroyBtn = makeButton(UDim2.new(0,220,0,45),UDim2.new(0,200,0,40), "Destroy GUI", true)
+    local infBtn     =makeButton(UDim2.new(0,10, 0,0),UDim2.new(0,200,0,40),"INF Money",true)
+    local gearBtn    =makeButton(UDim2.new(0,220,0,0),UDim2.new(0,200,0,40),"Gears",false)
+    local slapBtn    =makeButton(UDim2.new(0,10, 0,45),UDim2.new(0,200,0,40),"Best Slap",false)
+    local destroyBtn =makeButton(UDim2.new(0,220,0,45),UDim2.new(0,200,0,40),"Destroy GUI",true)
 
-    -- Footer --------------------------------------------------------
-    local follow = Instance.new("TextLabel", container)
-    follow.Size = UDim2.new(1,0,0,20)
-    follow.Position = UDim2.new(0,0,0,90)
-    follow.Text = "Follow Darkdex"
-    follow.Font = Enum.Font.GothamBold
-    follow.TextScaled = true
-    follow.TextColor3 = Color3.fromRGB(255,0,0)
-    follow.BackgroundTransparency = 1
+    local follow=Instance.new("TextLabel",container)
+    follow.Size=UDim2.new(1,0,0,20)
+    follow.Position=UDim2.new(0,0,0,90)
+    follow.Text="Follow Darkdex"
+    follow.Font=Enum.Font.GothamBold
+    follow.TextScaled=true
+    follow.TextColor3=Color3.fromRGB(255,0,0)
+    follow.BackgroundTransparency=1
 
-    -- Expand/collapse ----------------------------------------------
-    local expanded, h = false, 110  -- 90 (buttons) + 20 (footer)
+    local expanded,h=false,110
     arrowBtn.MouseButton1Click:Connect(function()
-        expanded = not expanded
-        arrowBtn.Text = expanded and "–" or "+"
-        TweenService:Create(container, TweenInfo.new(0.25), {Size = UDim2.new(1,0,0, expanded and h or 0)}):Play()
-        TweenService:Create(main, TweenInfo.new(0.25), {Size = UDim2.new(0,430,0, expanded and (40+h) or 40)}):Play()
+        expanded=not expanded
+        arrowBtn.Text=expanded and "–" or "+"
+        TweenService:Create(container,TweenInfo.new(0.25),{Size=UDim2.new(1,0,0,expanded and h or 0)}):Play()
+        TweenService:Create(main,TweenInfo.new(0.25),{Size=UDim2.new(0,430,0,expanded and (40+h) or 40)}):Play()
     end)
 
-    ----------------------------------------------------------------
-    -- Button callbacks --------------------------------------------
-    ----------------------------------------------------------------
     infBtn.MouseButton1Click:Connect(function()
         RepStorage.CratesUtilities.Remotes.GiveReward:FireServer(math.huge)
     end)
-
     gearBtn.MouseButton1Click:Connect(function()
         RepStorage.FreeGear_Remotes.FreeGearEvent:FireServer(player)
     end)
-
     slapBtn.MouseButton1Click:Connect(function()
         RepStorage.CratesUtilities.Remotes.GiveReward:FireServer("Glove")
     end)
-
     destroyBtn.MouseButton1Click:Connect(function()
         gui:Destroy()
     end)
